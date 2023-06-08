@@ -25,10 +25,19 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const InstructorsCollection = client.db("Melody-School").collection("Instructors")
+    const InstructorsCollection = client.db("Melody-School").collection("Instructors");
+    const classesCollection = client.db("Melody-School").collection("classes");
 
     app.get("/Instructors", async(req,res)=>{
       const result = await InstructorsCollection.find().toArray();
+      res.send(result);
+    })
+    
+    
+    
+    //class site
+    app.get("/classes", async(req,res)=>{
+      const result = await classesCollection.find().toArray();
       res.send(result);
     })
     // Send a ping to confirm a successful connection
