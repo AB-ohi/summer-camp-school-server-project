@@ -40,6 +40,17 @@ async function run() {
       const result = await classesCollection.find().toArray();
       res.send(result);
     })
+
+    app.get("/classSelect", async(req, res)=>{
+      const email = req.query.email;
+      if(!email){
+          res.send([])
+      }
+      const query ={email:email}
+      const result = await classSelectCollection.find().toArray()
+      res.send(result);
+  })
+  
     app.post("/classSelect",async(req,res)=>{
       const classSelect= req.body;
       console.log(classSelect)
