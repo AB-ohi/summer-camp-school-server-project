@@ -69,6 +69,18 @@ async function run() {
       const result = { admin: user?.role === "admin" };
       res.send(result);
     });
+    app.get("/users/instructors/:email", verifyJWT, async (req, res) => {
+      const email = req.params.email;
+
+      if (req.decoded.email !== email) {
+        res.send({ instructor: false });
+      }
+
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      const result = { admin: user?.role === "instructor" };
+      res.send(result);
+    });
     app.get("/Instructors", async(req,res)=>{
       const result = await InstructorsCollection.find().toArray();
       res.send(result);
@@ -141,13 +153,13 @@ async function run() {
     const result = await usersCollection.updateOne(filter, updateDoc);
     res.send(result);
   });
-  app.patch("/users/instructor/:id", async (req, res) => {
+  app.patch("/users/instructors/:id", async (req, res) => {
     const id = req.params.id;
 
     const filter = { _id: new ObjectId(id) };
     const updateDoc = {
       $set: {
-        role: "instructor",
+        role: "instructors",
       },
     };
     const result = await usersCollection.updateOne(filter, updateDoc);
