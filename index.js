@@ -149,6 +149,7 @@ async function run() {
     const result = await usersCollection.insertOne(user);
     res.send(result);
   });
+  // user-admin
   app.patch("/users/admin/:id", async (req, res) => {
     const id = req.params.id;
     const filter = { _id: new ObjectId(id) };
